@@ -1,3 +1,11 @@
+# I updated this ida rpc cause it was kinda getting old so feel free to modify it as you want 
+(you'll have to modify the app id and upload your assets so its kinda long tbh just use mine its faster)
+
+also the setup.bat build everything and setup everything by checking your ida dir so its user-friendly 
+
+
+
+
 ## Description
 
 IDA Discord RPC is a plugin for IDA that displays your current activity as Discord Rich Presence. It enhances your Discord profile with real-time information about what you're working on inside IDA.
