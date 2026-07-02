@@ -1,4 +1,4 @@
-# I updated this ida rpc cause it was kinda getting old so feel free to modify it as you want 
+# I updated this ida rpc cause it was kinda getting old
 (you'll have to modify the app id and upload your assets so its kinda long tbh just use mine its faster)
 
 also the setup.bat build everything and setup everything by checking your ida dir so its user-friendly 
