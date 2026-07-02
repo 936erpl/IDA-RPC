@@ -5,8 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(IDASDK_PATH "${CMAKE_SOURCE_DIR}/sdk/ida_home_9.1_sdk")
-set(IDASDK_LIB "${IDASDK_PATH}/lib/x64_win_vc_64_home/ida.lib")
+set(IDASDK_PATH "${CMAKE_SOURCE_DIR}/ida-sdk-9.3/src")
+set(IDASDK_LIB "${IDASDK_PATH}/lib/x64_win_vc_64/ida.lib")
 set(IDA_PLUGIN_OUTPUT_DIR "${CMAKE_BINARY_DIR}/ida_plugins")
 
 include(FetchContent)
@@ -33,7 +33,7 @@ add_library(ida_discord_rpc SHARED
 )
 
 target_include_directories(ida_discord_rpc PRIVATE
-    ${discord-rpc_SOURCE_DIR}/include
+    "${CMAKE_BINARY_DIR}/_deps/discord-rpc-src/include"
     src
 )
 

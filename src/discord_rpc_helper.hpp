@@ -4,13 +4,18 @@
 
 struct discord_helper_spec
 {
-    //std::string state;
+    std::string state;
     std::string details;
-    //std::string large_image_key;
-    //std::string large_image_text;
+    std::string large_image_key;
+    std::string large_image_text;
 
     std::string small_image_key;
     std::string small_image_text;
+
+    std::string button1_label;
+    std::string button1_url;
+    std::string button2_label;
+    std::string button2_url;
 };
 
 namespace idarpc::discord_rpc_helper

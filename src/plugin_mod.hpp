@@ -18,6 +18,7 @@ private:
     void init_events();
     void clear_rich_presence();
     void disabled_events();
+    void update_current_context();
 
 public:
     ida_rpc_mod();

@@ -15,22 +15,25 @@
 
 idarpc::discord::RichPresence *rpc = nullptr;
 
-void ida_rpc_mod::init_events() {
-    //idb_listener = new idarpc::listener::IDBListener();
-    //hook_event_listener(HT_IDB, idb_listener, 0);
+void ida_rpc_mod::init_events()
+{
+    idb_listener = new idarpc::listener::IDBListener();
+    hook_event_listener(HT_IDB, idb_listener);
 
-    //ui_listener = new idarpc::listener::UIListener();
-    //hook_event_listener(HT_UI, ui_listener, 0);
+    ui_listener = new idarpc::listener::UIListener();
+    hook_event_listener(HT_UI, ui_listener);
 
     view_listener = new idarpc::listener::ViewListener();
-    hook_event_listener(HT_VIEW, view_listener, 0);
+    hook_event_listener(HT_VIEW, view_listener);
 }
 
-void ida_rpc_mod::init_discord_rpc() {
-    rpc = new idarpc::discord::RichPresence("1383503123666173952");
+void ida_rpc_mod::init_discord_rpc()
+{
+    rpc = new idarpc::discord::RichPresence("1522327899166736565");
 }
 
-void ida_rpc_mod::disabled_events() {
+void ida_rpc_mod::disabled_events()
+{
     if (idb_listener)
     {
         unhook_event_listener(HT_IDB, idb_listener);
@@ -47,14 +50,14 @@ void ida_rpc_mod::disabled_events() {
 
     if (view_listener)
     {
-        unhook_event_listener(HT_UI, view_listener);
+        unhook_event_listener(HT_VIEW, view_listener);
         delete view_listener;
         view_listener = nullptr;
     }
-
 }
 
-void ida_rpc_mod::clear_rich_presence() {
+void ida_rpc_mod::clear_rich_presence()
+{
     if (rpc)
     {
         rpc->clear_presence();
@@ -63,25 +66,51 @@ void ida_rpc_mod::clear_rich_presence() {
     }
 }
 
-//Create
-ida_rpc_mod::ida_rpc_mod()
+void ida_rpc_mod::update_current_context()
 {
-
-    init_discord_rpc();
-    init_events();
-
     discord_helper_spec spec;
-    spec.details = "Hello World";
+
+    std::string filename = idarpc::idahelper::get_filename();
+    std::string summary = idarpc::idahelper::get_analysis_summary();
+    std::string current_func = idarpc::idahelper::get_current_function_name();
+    std::string current_addr = idarpc::idahelper::get_screen_ea_str();
+
+    if (!current_func.empty())
+    {
+        spec.details = current_func;
+        spec.state = current_addr + " | " + filename;
+    }
+    else
+    {
+        spec.details = std::string("Analyzing ") + filename;
+        spec.state = summary + " | " + idarpc::idahelper::get_file_type_string();
+    }
+
+    spec.small_image_key = "reverser";
+    spec.small_image_text = "made by reversinglabs";
+
+    spec.button1_label = "Github";
+    spec.button1_url = "https://github.com/936erpl";
+    spec.button2_label = "Discord";
+    spec.button2_url = "https://discord.gg/VcMegfyeRw";
 
     idarpc::discord_rpc_helper::update_presence(spec);
 }
 
-//Close
+ida_rpc_mod::ida_rpc_mod()
+{
+    init_discord_rpc();
+    init_events();
+    update_current_context();
+
+    idarpc::log(LogLevel::Info, std::string("Plugin initialized for: ") + idarpc::idahelper::get_filename());
+}
+
 ida_rpc_mod::~ida_rpc_mod()
 {
     idarpc::log(LogLevel::Warning, "Shutting down...");
-    ida_rpc_mod::disabled_events();
-    ida_rpc_mod::clear_rich_presence();
+    disabled_events();
+    clear_rich_presence();
 }
 
 bool ida_rpc_mod::run(size_t arg)
