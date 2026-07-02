@@ -4,9 +4,9 @@ IDA Discord RPC is a plugin for IDA that displays your current activity as Disco
 
 ## Compatible
 
-- IDA HOME 9.0
+- IDA HOME 9.x
 
-- IDA PRO 9.0
+- IDA PRO 9.x
 
 ## Installation
 
@@ -23,7 +23,7 @@ It does not appear in the plugin menu, as it is designed to be invisible during 
 
 ## Updates
 
-Click here to check the latest releases: [here](https://github.com/reversedcodes/IDA-RPC/releases)
+Click here to check the latest releases: [here](https://github.com/936erpl/IDA-RPC/releases)
 
 ## License
 
