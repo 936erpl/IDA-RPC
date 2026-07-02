@@ -5,6 +5,8 @@ also the setup.bat build everything and setup everything by checking your ida di
 
 
 
+---
+
 
 ## Description
 
@@ -37,3 +39,6 @@ Click here to check the latest releases: [here](https://github.com/936erpl/IDA-R
 
 This project is licensed under the [Apache License 2.0](LICENSE).  
 You are free to use, modify, and distribute this software under the terms of the license.
+
+
+credits to 'reversedcodes' for the code base
