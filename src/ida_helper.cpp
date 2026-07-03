@@ -3,6 +3,7 @@
 #include <idp.hpp>
 #include <diskio.hpp>
 #include <funcs.hpp>
+#include <xref.hpp>
 #include <segment.hpp>
 #include <name.hpp>
 #include <bytes.hpp>
@@ -20,6 +21,33 @@ std::string get_filename()
     char filename_buf[260] = {};
     get_root_filename(filename_buf, sizeof(filename_buf));
     return std::string(filename_buf);
+}
+
+func_extra_info get_function_extra_info(ea_t ea)
+{
+    func_extra_info info;
+
+    func_t *pfn = get_func(ea);
+    if (pfn)
+    {
+        info.size = pfn->end_ea - pfn->start_ea;
+        info.is_lib = (pfn->flags & FUNC_LIB) != 0;
+        info.is_thunk = (pfn->flags & FUNC_THUNK) != 0;
+    }
+
+    xrefblk_t xb;
+    for (bool ok = xb.first_to(ea, XREF_ALL); ok; ok = xb.next_to())
+        info.xref_count++;
+
+    segment_t *seg = getseg(ea);
+    if (seg)
+    {
+        qstring segname;
+        get_segm_name(&segname, seg);
+        info.segment_name = segname.c_str();
+    }
+
+    return info;
 }
 
 bool is_ida_home_version()
